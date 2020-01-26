@@ -1,0 +1,2 @@
+﻿- Cambiar el usuario en el manual con los métodos de bloquear y expirar usuario.
+- Cambiar métodos del RestController
