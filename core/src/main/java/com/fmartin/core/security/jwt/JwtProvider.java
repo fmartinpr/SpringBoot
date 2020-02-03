@@ -13,8 +13,12 @@ import org.springframework.stereotype.Component;
 
 import com.fmartin.core.security.UsuarioPrincipal;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 /**
  * @author fmgar
@@ -40,8 +44,28 @@ public class JwtProvider {
 				.setExpiration(new Date(new Date().getTime() + expiration * 1000))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
-	
+
 	public String getNombreUsuarioFromToken(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
 	}
+
+	public boolean validateToken(String token) {
+		try {
+			Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+			return true;
+		} catch (MalformedJwtException e) {
+			logger.error("token mal formado " + e.getMessage());
+		} catch (UnsupportedJwtException e) {
+			logger.error("token no soportado " + e.getMessage());
+		} catch (ExpiredJwtException e) {
+			logger.error("token expirado " + e.getMessage());
+		} catch (IllegalArgumentException e) {
+			logger.error("token vacío " + e.getMessage());
+		} catch (SignatureException e) {
+			logger.error("error en la firma " + e.getMessage());
+		}
+
+		return false;
+	}
+
 }

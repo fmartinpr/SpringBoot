@@ -5,15 +5,21 @@ package com.fmartin.core.security.jwt;
 
 import java.io.IOException;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.fmartin.core.service.UserDetailsServiceImpl;
 
 /**
  * @author fmgar
@@ -21,18 +27,44 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class JwtTokenFilter implements AuthenticationEntryPoint{
+public class JwtTokenFilter extends OncePerRequestFilter{
 	
-	private static final Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
+	private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 	
+	@Autowired
+	JwtProvider jwtProvider;
+	
+	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
+
 	/* (non-Javadoc)
-	 * @see org.springframework.security.web.AuthenticationEntryPoint#commence(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
+	 * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
-		logger.error("fail método commence");
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "credenciales erróneas");
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		try {
+			String token = getToken(request);
+			if(token != null && jwtProvider.validateToken(token)) {
+				String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
+				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUsuario);
+				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(auth);
+			}
+		}catch (Exception e) {
+			logger.error("fail en método doFilter " + e.getLocalizedMessage());
+		}
+		
+		filterChain.doFilter(request, response);
+		
 	}
-
+	
+	private String getToken(HttpServletRequest request) {
+		String authReq = request.getHeader("Authorization");
+		if(authReq != null && authReq.startsWith("Bearer "))
+			return authReq.replace("Bearer ", "");
+		return null;
+	}
+	
+	
 }
