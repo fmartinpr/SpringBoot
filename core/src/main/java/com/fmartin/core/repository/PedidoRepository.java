@@ -25,4 +25,15 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 			+ "join fetch p.usuario")
 	Set<Pedido> findAllFetch();
 
+	/**
+	 * @param id
+	 * @return
+	 */
+	@Query("SELECT p FROM Pedido p "
+			+ "join fetch p.lineas "
+			+ "join fetch p.direcciones "
+			+ "join fetch p.usuario "
+			+ "WHERE p.id = ?1")
+	Pedido findByPedido(long id);
+
 }

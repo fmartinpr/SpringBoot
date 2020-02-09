@@ -42,4 +42,12 @@ public class PedidoService {
 		return this.pedidoRepository.findAllFetch();
 	}
 
+	/**
+	 * @param l
+	 */
+	public Pedido getPedido(long id) {
+		return this.pedidoRepository.findByPedido(id);
+		
+	}
+
 }

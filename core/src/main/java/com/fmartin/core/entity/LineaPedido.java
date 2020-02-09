@@ -113,7 +113,7 @@ public class LineaPedido {
 	 */
 	@Override
 	public String toString() {
-		return "LineaPedido [unidades=" + unidades + ", pedido=" + pedido + ", producto=" + producto + "]";
+		return "LineaPedido [unidades=" + unidades + ", producto=" + producto + "]";
 	}
 
 }

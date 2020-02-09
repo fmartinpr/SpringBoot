@@ -145,7 +145,7 @@ public class Pedido implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Pedido [codigo=" + codigo + ", lineas=" + lineas + ", direcciones=" + direcciones + "]";
+		return "Pedido [codigo=" + codigo + ", lineas=" + lineas + ", usuario=" + usuario + "]";
 	}
 
 }

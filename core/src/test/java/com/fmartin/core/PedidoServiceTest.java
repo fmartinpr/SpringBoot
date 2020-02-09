@@ -20,6 +20,7 @@ import com.fmartin.core.entity.LineaPedido;
 import com.fmartin.core.entity.Pedido;
 import com.fmartin.core.entity.Producto;
 import com.fmartin.core.entity.Usuario;
+import com.fmartin.core.service.LineaPedidoService;
 import com.fmartin.core.service.PedidoService;
 import com.fmartin.core.service.ProductoService;
 import com.fmartin.core.service.UsuarioService;
@@ -41,6 +42,9 @@ public class PedidoServiceTest {
 	
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	LineaPedidoService lineaPedidoService;
 	
 	//@Test
 	public void GenerarDatos() {
@@ -88,7 +92,15 @@ public class PedidoServiceTest {
 	@Test
 	public void mostrarTodosFetch() {
 		Long tiempo = new Date().getTime();
-		Set<Pedido> pedidos = this.pedidoService.mostrarTodosFetch();
+		//Set<Pedido> pedidos = this.pedidoService.mostrarTodosFetch();
+		Pedido pedido = this.pedidoService.getPedido(1L);
+		System.out.println(pedido.getLineas());
+		pedido.getLineas().remove(1);
+		this.pedidoService.guardar(pedido);
+		//this.lineaPedidoService.eliminar(35983L);
+		pedido = this.pedidoService.getPedido(1L);
+		System.out.println(pedido.getLineas());
+		
 		/*for(Pedido pedido : pedidos){
 			pedido.getUsuario().setRoles(usuarioService.getByIdUsuarioRoles(pedido.getUsuario().getId()));
 		}*/

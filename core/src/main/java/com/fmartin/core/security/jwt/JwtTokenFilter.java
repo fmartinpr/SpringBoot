@@ -26,7 +26,6 @@ import com.fmartin.core.service.UserDetailsServiceImpl;
  *
  */
 
-@Component
 public class JwtTokenFilter extends OncePerRequestFilter{
 	
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
