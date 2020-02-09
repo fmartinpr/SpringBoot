@@ -1,0 +1,11 @@
+
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-1-presentacion-del-proyecto/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-2-creacion-del-back-end/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-3-rest-service-simple/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-4-prueba-del-rest-con-postman/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-5-crear-el-frontend/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-6-servicio-rutas-y-lista-de-productos/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-7-ver-crear-editar-y-borrar-productos/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-8-entidades-usuario-y-rol/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-9-userdetails/
+https://inezpre5.wordpress.com/2019/04/15/jwt-con-spring-boot-mysql-y-angular-7-capitulo-10-json-web-token/
