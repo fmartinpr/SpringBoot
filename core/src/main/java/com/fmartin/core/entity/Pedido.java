@@ -39,7 +39,7 @@ public class Pedido implements Serializable{
 	@NotNull
 	private String codigo;
 	
-	@OneToMany(mappedBy="pedido", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LineaPedido> lineas;
 	
 	@NotNull

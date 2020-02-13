@@ -95,9 +95,11 @@ public class PedidoServiceTest {
 		//Set<Pedido> pedidos = this.pedidoService.mostrarTodosFetch();
 		Pedido pedido = this.pedidoService.getPedido(1L);
 		System.out.println(pedido.getLineas());
-		pedido.getLineas().remove(1);
-		this.pedidoService.guardar(pedido);
-		//this.lineaPedidoService.eliminar(35983L);
+		LineaPedido linea = pedido.getLineas().get(0);
+		linea.setPedido(null);
+		pedido.getLineas().remove(linea);
+		//this.pedidoService.guardar(pedido);
+		//this.lineaPedidoService.eliminar(1L);
 		pedido = this.pedidoService.getPedido(1L);
 		System.out.println(pedido.getLineas());
 		
