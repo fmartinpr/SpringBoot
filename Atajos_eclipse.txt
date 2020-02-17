@@ -1,0 +1,4 @@
+Alt+^+j ------------> Comentarío de Método.
+Ctrl+^+f -----------> Dar formato a la clase.
+Ctrl+^+o -----------> Organizador de import.
+Ctrl+^+/ -----------> Comentar / Descomentar código.
