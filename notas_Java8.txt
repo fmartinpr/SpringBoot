@@ -1,0 +1,7 @@
+﻿- Filtrar una colección List
+[List].stream().filter([objeto] -> [objeto].[campo_objeto_filtrar] == [valor_filtrar]).collect(Collectors.toList())
+
+- Parsear Set a List 
+List<[tipo_objeto]> [objeto] = new ArrayList<tipo_objeto>([objeto_set]);
+
+Collections.sort(personsSorted, (o1, o2) -> o1.getName().compareTo(o2.getName()));

@@ -1,0 +1,21 @@
+﻿Actualizar versión: E:\P45-12972-09_BRUJULA\LMS-EVYA\LMSEVAngular\src\app\components\shared\footer\footer.component.html
+
+ng build --prod --output-path dist_99
+
+------------------------------------------------------------------------------------------
+cd /ame4j/bruju/springboot/
+sudo /etc/init.d/EscuelaDeVentasApi stop
+sudo mv -i /ame4j/bruju/version/EscuelaVentas/des/EscuelaDeVentas.jar EscuelaDeVentas.jar
+sudo /etc/init.d/EscuelaDeVentasApi start
+
+------------------------------------------------------------------------------------------
+
+https://evyalmsdes.endesa.es/admin/settings.php?section=externalservices 
+Pulsar la opción Functions en WSMoodle.
+Pulsar add funcitons y meter criterio de busqueda. 
+Seleccionar las funciones y puslar Aceptar.
+
+Matar un proceso
+
+sudo netstat -nlp|grep 8280
+sudo kill -9 [pid]
