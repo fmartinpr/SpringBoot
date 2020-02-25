@@ -3,10 +3,11 @@
 ng build --prod --output-path dist_99
 
 ------------------------------------------------------------------------------------------
+su amebruju
 cd /ame4j/bruju/springboot/
-sudo /etc/init.d/EscuelaDeVentasApi stop
-sudo mv -i /ame4j/bruju/version/EscuelaVentas/des/EscuelaDeVentas.jar EscuelaDeVentas.jar
-sudo /etc/init.d/EscuelaDeVentasApi start
+/etc/init.d/EscuelaDeVentasApi stop
+mv -i /ame4j/bruju/version/EscuelaVentas/des/EscuelaDeVentas.jar EscuelaDeVentas.jar
+/etc/init.d/EscuelaDeVentasApi start
 
 ------------------------------------------------------------------------------------------
 
