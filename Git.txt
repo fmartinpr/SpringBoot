@@ -3,4 +3,4 @@
 - git pull https://github.com/fmartinpr/SpringBoot.git: Trae los cabios desde el servidor remoto.
 - git commit: comprueba los cambios pendiente de subir.
 - git commit -m <msg>: Sube los cambios al servidor local
-- git Push [ruta_servidor_remoto]: Sube los cambios al servidor remoto.
+- git Push [ruta_servidor_remoto] master: Sube los cambios al servidor remoto.
