@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,7 @@ public class ProductoController {
 	}
 
 	@PostMapping("/nuevo")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> create(@RequestBody Producto producto) {
 		if (StringUtils.isBlank(producto.getNombre()))
 			return new ResponseEntity<Mensaje>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
@@ -65,6 +67,7 @@ public class ProductoController {
 	}
 
 	@PutMapping("/actualizar")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody Producto producto) {
 		if (!productoService.existePorId(producto.getId()))
 			return new ResponseEntity<Mensaje>(new Mensaje("no existe ese producto"), HttpStatus.NOT_FOUND);
@@ -80,6 +83,7 @@ public class ProductoController {
 	}
 
 	@DeleteMapping("/borrar/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (!productoService.existePorId(id))
 			return new ResponseEntity<Mensaje>(new Mensaje("no existe ese producto"), HttpStatus.NOT_FOUND);
