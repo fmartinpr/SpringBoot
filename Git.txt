@@ -1,6 +1,6 @@
 - git init: Todo lo que se escriba dentro de la carpeta va a estar dentro del .git
-- git add: Lleva el control de los archivos que se agregan luego de escribir ese comando.
 - git pull https://github.com/fmartinpr/SpringBoot.git: Trae los cabios desde el servidor remoto.
+- git add .: Añade los cambios.
 - git commit: comprueba los cambios pendiente de subir.
 - git commit -m <msg>: Sube los cambios al servidor local
-- git Push [ruta_servidor_remoto] master: Sube los cambios al servidor remoto.
+- git push [ruta_servidor_remoto] master: Sube los cambios al servidor remoto.

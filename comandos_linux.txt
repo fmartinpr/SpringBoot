@@ -1,0 +1,3 @@
+- Apagar servidor: poweroff
+- Consultar fichero:
+	* tail -n [número_filas] [nombre_archivo]
