@@ -3,12 +3,17 @@
  */
 package com.fmartin.core.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.fmartin.core.entity.Rol;
@@ -46,8 +51,8 @@ public class UsuarioService {
 	 * @param id
 	 * @return Usuario
 	 */
-	public Usuario getByIdUsuario(Long id) {
-		return this.usuarioRepository.getOne(id);
+	public Optional<Usuario> getByIdUsuario(Long id) {
+		return this.usuarioRepository.findById(id);
 	}
 
 	/**
@@ -56,5 +61,9 @@ public class UsuarioService {
 	 */
 	public Set<Rol> getByIdUsuarioRoles(Long id) {
 		return this.usuarioRepository.getRolesById(id).getRoles();
+	}
+
+	public List<SimpleGrantedAuthority> getAuthorities() {
+		return (List<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().collect(Collectors.toList());
 	}
 }

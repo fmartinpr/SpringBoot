@@ -36,7 +36,7 @@ public class ProductoController {
 
 	@Autowired
 	ProductoService productoService;
-
+	
 	@GetMapping("/lista")
 	public ResponseEntity<List<Producto>> getLista() {
 		List<Producto> lista = productoService.obtenerTodos();

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -22,10 +23,12 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Table(name="tt_usuario")
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; 
 	
 	@NotNull
@@ -44,7 +47,7 @@ public class Usuario {
 	
 	@NotNull
 	@ManyToMany
-	@JoinTable(name="usuario_rol", 
+	@JoinTable(name="tt_usuario_rol", 
 		joinColumns = @JoinColumn(name = "usuario_id"), 
 		inverseJoinColumns = @JoinColumn(name = "rol_id"))
 	private Set<Rol> roles = new HashSet<>();

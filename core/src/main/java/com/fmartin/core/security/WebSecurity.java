@@ -88,19 +88,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	 * WebSecurityConfigurerAdapter#configure(org.springframework.security.config.
 	 * annotation.web.builders.HttpSecurity)
 	 */
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
-			.authorizeRequests().antMatchers("/api/auth/**")
-			.permitAll()
-			.anyRequest()
-			.authenticated()
-			.and()
-			.exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+	http.cors().and().csrf().disable()
+		.authorizeRequests().antMatchers("/api/auth/**", "/**", 
+				"/**/*.css", "/**/*.js", "/favicon.ico")
+		.permitAll()
+		.anyRequest()
+		.authenticated()
+		.and()
+		.exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
+		.and()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-	}
+	http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+}
 
 }

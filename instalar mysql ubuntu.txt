@@ -13,3 +13,5 @@ STRONG Length >= 8, numeric, mixed case, special characters and dictionary      
 Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG:
  2
 3.2- Establecer contraseña root
+
+mysql -u root -p

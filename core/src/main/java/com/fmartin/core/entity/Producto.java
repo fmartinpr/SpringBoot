@@ -17,13 +17,14 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table(name="producto")
+@Table(name="tt_producto")
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 2949021067727556122L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@NotBlank

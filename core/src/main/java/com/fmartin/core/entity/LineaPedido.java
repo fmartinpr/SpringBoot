@@ -18,11 +18,12 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table(name="linea_pedido")
+@Table(name="tt_linea_pedido")
 public class LineaPedido {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@NotNull
