@@ -17,7 +17,7 @@ import com.fmartin.core.repository.HeroeRepository;
 public class HeroeService {
 	@Autowired
 	HeroeRepository heroeRepository;
-	
+
 	public Heroe create(Heroe heroe) {
 		heroe.setId(UUID.randomUUID().toString());
 		return this.heroeRepository.save(heroe);
@@ -26,21 +26,21 @@ public class HeroeService {
 	public Heroe update(Heroe heroe) {
 		return this.heroeRepository.save(heroe);
 	}
-	
-	public List<Heroe> getHeroes(){
+
+	public List<Heroe> getHeroes() {
 		return this.heroeRepository.findAll();
 	}
 
 	public Heroe getById(String id) {
 		return this.heroeRepository.findById(id).orElse(null);
 	}
-	
-public void delete(String id) throws CoreException {
-	try {
-		this.heroeRepository.deleteById(id);
-	}catch (Exception e) {
-		throw new CoreException("Error eliminar heroe");
+
+	public void delete(String id) throws CoreException {
+		try {
+			this.heroeRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new CoreException("Error eliminar heroe");
+		}
 	}
-}
 
 }
