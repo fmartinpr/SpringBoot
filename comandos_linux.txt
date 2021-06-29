@@ -1,3 +1,16 @@
 - Apagar servidor: poweroff
+
 - Consultar fichero:
 	* tail -n [número_filas] [nombre_archivo]
+
+- E: No se pudo bloquear /var/lib/dpkg/lock - open (11: Recurso
+no disponible temporalmente)
+E: No se pudo bloquear el directorio de administración (/var/lib/dpkg/),
+¿quizás haya algún otro proceso utilizándolo?
+$ sudo fuser -vki  /var/lib/dpkg/lock
+$ sudo rm -f /var/lib/dpkg/lock
+$ sudo dpkg --configure -a
+$ sudo apt-get autoremove
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
