@@ -63,7 +63,13 @@ public class UsuarioService {
 		return this.usuarioRepository.getRolesById(id).getRoles();
 	}
 
-	public List<SimpleGrantedAuthority> getAuthorities() {
-		return (List<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().collect(Collectors.toList());
-	}
+public List<SimpleGrantedAuthority> getAuthorities() {
+	return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(this :: convertSimpleGrantedAuthority).collect(Collectors.toList());
+}
+
+private SimpleGrantedAuthority convertSimpleGrantedAuthority(GrantedAuthority a){
+	if(a == null) return null;
+	else return (SimpleGrantedAuthority)a;
+}
+	
 }

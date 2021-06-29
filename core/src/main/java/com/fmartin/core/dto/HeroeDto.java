@@ -1,4 +1,4 @@
-package com.fmartin.core.DTO;
+package com.fmartin.core.dto;
 
 import java.io.Serializable;
 

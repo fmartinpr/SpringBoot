@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.fmartin.core.DTO;
+package com.fmartin.core.dto;
 
 /**
  * @author fmgar

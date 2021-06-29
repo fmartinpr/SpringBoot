@@ -21,6 +21,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fmartin.core.service.UserDetailsServiceImpl;
 
+import oracle.core.lmx.CoreException;
+
 /**
  * @author fmgar
  *

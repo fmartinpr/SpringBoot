@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fmartin.core.DTO.Mensaje;
+import com.fmartin.core.dto.Mensaje;
 import com.fmartin.core.entity.Producto;
 import com.fmartin.core.service.ProductoService;
 
@@ -38,12 +38,14 @@ public class ProductoController {
 	ProductoService productoService;
 	
 	@GetMapping("/lista")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<Producto>> getLista() {
 		List<Producto> lista = productoService.obtenerTodos();
 		return new ResponseEntity<List<Producto>>(lista, HttpStatus.OK);
 	}
 
 	@GetMapping("/detalle/{id}")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getOne(@PathVariable Long id) {
 		if (!productoService.existePorId(id)) {
 			return new ResponseEntity<Mensaje>(new Mensaje("No existe ese producto"), HttpStatus.NOT_FOUND);
@@ -90,5 +92,5 @@ public class ProductoController {
 		productoService.borrar(id);
 		return new ResponseEntity<Mensaje>(new Mensaje("producto eliminado"), HttpStatus.OK);
 	}
-
+	
 }

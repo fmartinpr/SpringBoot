@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,10 +28,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fmartin.core.DTO.JwtDTO;
-import com.fmartin.core.DTO.LoginUsuario;
-import com.fmartin.core.DTO.Mensaje;
-import com.fmartin.core.DTO.NuevoUsuario;
+import com.fmartin.core.dto.JwtDTO;
+import com.fmartin.core.dto.LoginUsuario;
+import com.fmartin.core.dto.Mensaje;
+import com.fmartin.core.dto.NuevoUsuario;
 import com.fmartin.core.entity.Rol;
 import com.fmartin.core.entity.Usuario;
 import com.fmartin.core.enums.RolNombre;
@@ -64,30 +65,21 @@ public class AuthController {
 	JwtProvider jwtProvider;
 
 	@PostMapping("/nuevo")
-	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+	public ResponseEntity<Mensaje> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return new ResponseEntity<>(new Mensaje("campos vacíos o email inválido"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Mensaje(bindingResult.getAllErrors().get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
 		}
-
-		if (usuarioService.existePorNombre(nuevoUsuario.getNombreUsuario()))
-			return new ResponseEntity<>(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		if (usuarioService.existePorEmail(nuevoUsuario.getEmail()))
-			return new ResponseEntity<>(new Mensaje("Ese email ya existe"), HttpStatus.BAD_REQUEST);
 
 		Usuario usuario = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(),
 				nuevoUsuario.getEmail(), passwordEncoder.encode(nuevoUsuario.getPassword()));
-		Set<String> rolesStr = new HashSet<String>();
-		Set<Rol> roles = new HashSet<Rol>();
+		Set<String> rolesStr = nuevoUsuario.getRoles();
+		Set<Rol> roles = new HashSet<>();
+		Rol rolUser = rolService.getByRolNombre(RolNombre.ROLE_USER).orElse(null);
+		if(rolUser != null) roles.add(rolUser);
 		for (String rol : rolesStr) {
-			switch (rol) {
-			case "admin":
-				Rol rolAdmin = rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get();
-				roles.add(rolAdmin);
-				break;
-			default:
-				Rol rolUser = rolService.getByRolNombre(RolNombre.ROLE_USER).get();
-				roles.add(rolUser);
-
+			if(rol.equals("admin")){
+				Rol rolAdmin = rolService.getByRolNombre(RolNombre.ROLE_ADMIN).orElse(null);
+				if(rolAdmin != null) roles.add(rolAdmin);
 			}
 		}
 
@@ -110,13 +102,13 @@ public class AuthController {
 		String jwt = jwtProvider.generateToken(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		JwtDTO jwDTO = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-		return new ResponseEntity<JwtDTO>(jwDTO, HttpStatus.OK);
+		return new ResponseEntity<>(jwDTO, HttpStatus.OK);
 		
 	}
 	
 	@GetMapping("/authorities")
 	public ResponseEntity<List<SimpleGrantedAuthority>> getAuthorities(){
-		return new ResponseEntity<List<SimpleGrantedAuthority>>(this.usuarioService.getAuthorities(), HttpStatus.OK);
+		return new ResponseEntity<>(this.usuarioService.getAuthorities(), HttpStatus.OK);
 	}
 
 }

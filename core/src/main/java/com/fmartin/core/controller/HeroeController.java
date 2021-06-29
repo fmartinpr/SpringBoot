@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fmartin.core.DTO.HeroeDto;
+import com.fmartin.core.dto.HeroeDto;
 import com.fmartin.core.entity.Heroe;
-import com.fmartin.core.exception.CoreException;
 import com.fmartin.core.service.HeroeService;
 
 @RestController
@@ -28,45 +27,51 @@ import com.fmartin.core.service.HeroeService;
 public class HeroeController {
 	@Autowired
 	HeroeService heroeService;
-	
+
 	@Autowired
-    private ModelMapper modelMapper;
-		
+	private ModelMapper modelMapper;
+
 	@GetMapping("/all")
-	public ResponseEntity<List<HeroeDto>> getAll(){
+	public ResponseEntity<List<HeroeDto>> getAll() {
 		List<Heroe> lstHeroe = this.heroeService.getHeroes();
-		return new ResponseEntity<>(lstHeroe.stream().map(this::convertToDto).collect(Collectors.toList()), HttpStatus.OK);
+		return new ResponseEntity<>(lstHeroe.stream().map(this::convertToDto).collect(Collectors.toList()),
+				HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/one/{id}")
-	public ResponseEntity<HeroeDto> getById(@PathVariable("id") String id){
+	public ResponseEntity<HeroeDto> getById(@PathVariable("id") String id) {
 		return new ResponseEntity<>(this.convertToDto(this.heroeService.getById(id)), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/nuevo")
-	public ResponseEntity<HeroeDto> create(@RequestBody HeroeDto heroeDto){
+	public ResponseEntity<HeroeDto> create(@RequestBody HeroeDto heroeDto) {
 		Heroe heroe = this.convertToEntity(heroeDto);
 		return new ResponseEntity<>(this.convertToDto(this.heroeService.create(heroe)), HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/modificar/{idHeroe}")
-	public ResponseEntity<HeroeDto> update(@RequestBody HeroeDto heroeDto, @PathVariable String idHeroe){
+	public ResponseEntity<HeroeDto> update(@RequestBody HeroeDto heroeDto, @PathVariable String idHeroe) {
 		Heroe heroe = this.convertToEntity(heroeDto);
 		return new ResponseEntity<>(this.convertToDto(this.heroeService.update(heroe)), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{idHeroe}")
-	public ResponseEntity<Boolean> delete(@PathVariable String idHeroe){
+	public ResponseEntity<Boolean> delete(@PathVariable String idHeroe) {
 		this.heroeService.delete(idHeroe);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
+
 	private HeroeDto convertToDto(Heroe heroe) {
 		return modelMapper.map(heroe, HeroeDto.class);
 	}
-	
+
 	private Heroe convertToEntity(HeroeDto heroeDto) {
 		return modelMapper.map(heroeDto, Heroe.class);
 	}
+
+//	@ExceptionHandler({ CoreException.class })
+//	public ResponseEntity<ErrorDto> handleException(Exception ex) {
+//		return new ResponseEntity<>(new ErrorDto(ex.getMessage()), HttpStatus.BAD_REQUEST);
+//	}
 
 }
