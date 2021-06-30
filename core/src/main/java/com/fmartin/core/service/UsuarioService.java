@@ -34,15 +34,15 @@ public class UsuarioService {
 	public Optional<Usuario> getByNombreUsuario(String nombre) {
 		return this.usuarioRepository.findByNombre(nombre);
 	}
-	
+
 	public boolean existePorNombre(String nombre) {
 		return this.usuarioRepository.existsByNombreUsuario(nombre);
 	}
-	
+
 	public boolean existePorEmail(String email) {
 		return this.usuarioRepository.existsByEmail(email);
 	}
-	
+
 	public void guardar(Usuario usuario) {
 		this.usuarioRepository.save(usuario);
 	}
@@ -63,13 +63,16 @@ public class UsuarioService {
 		return this.usuarioRepository.getRolesById(id).getRoles();
 	}
 
-public List<SimpleGrantedAuthority> getAuthorities() {
-	return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(this :: convertSimpleGrantedAuthority).collect(Collectors.toList());
-}
+	public List<SimpleGrantedAuthority> getAuthorities() {
+		return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+				.map(this::convertSimpleGrantedAuthority).collect(Collectors.toList());
+	}
 
-private SimpleGrantedAuthority convertSimpleGrantedAuthority(GrantedAuthority a){
-	if(a == null) return null;
-	else return (SimpleGrantedAuthority)a;
-}
-	
+	private SimpleGrantedAuthority convertSimpleGrantedAuthority(GrantedAuthority a) {
+		if (a == null)
+			return null;
+		else
+			return (SimpleGrantedAuthority) a;
+	}
+
 }
