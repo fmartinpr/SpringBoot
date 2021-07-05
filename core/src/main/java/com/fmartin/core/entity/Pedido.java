@@ -29,12 +29,12 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-//@Table(name = "tt_pedido", uniqueConstraints={@UniqueConstraint(columnNames={"codigo"},name = "UQ_PEDIDO_CODIGO")})
-@Table(name = "tt_pedido", uniqueConstraints = {
+@Table(name = "tt_pedido", uniqueConstraints={@UniqueConstraint(columnNames={"codigo"},name = "UQ_PEDIDO_CODIGO")})
+/*@Table(name = "tt_pedido", uniqueConstraints = {
    @UniqueConstraint(name = "UQ_PEDIDO_CODIGO", 
 	   columnNames = {"codigo"}),
    @UniqueConstraint(name = "UQ_PEDIDO_REF_ALMACEN", 
-		columnNames = {"refAlmacen"})})
+		columnNames = {"refAlmacen"})})*/
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = -8058130391749281202L;
@@ -46,7 +46,7 @@ public class Pedido implements Serializable{
 	
 	private String codigo; 
 	
-	private String refAlmacen;
+	//private String refAlmacen;
 	
 	@OneToMany(mappedBy="pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LineaPedido> lineas;
@@ -157,12 +157,12 @@ public class Pedido implements Serializable{
 		return "Pedido [codigo=" + codigo + ", lineas=" + lineas + ", usuario=" + usuario + "]";
 	}
 
-	public String getRefAlmacen() {
-		return refAlmacen;
-	}
-
-	public void setRefAlmacen(String refAlmacen) {
-		this.refAlmacen = refAlmacen;
-	}
+//	public String getRefAlmacen() {
+//		return refAlmacen;
+//	}
+//
+//	public void setRefAlmacen(String refAlmacen) {
+//		this.refAlmacen = refAlmacen;
+//	}
 
 }

@@ -3,6 +3,8 @@
  */
 package com.fmartin.core.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -20,8 +22,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="tt_linea_pedido")
-public class LineaPedido {
+public class LineaPedido implements Serializable{
 	
+	private static final long serialVersionUID = -439304708493470171L;
+
 	@Id
 	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.AUTO)

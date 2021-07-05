@@ -3,6 +3,7 @@
  */
 package com.fmartin.core.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +25,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="tt_usuario")
-public class Usuario {
+public class Usuario implements Serializable{
 	
+	private static final long serialVersionUID = 3375263454279253650L;
+
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GeneratedValue(strategy = GenerationType.AUTO)
