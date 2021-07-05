@@ -4,6 +4,7 @@
 package com.fmartin.core.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,11 +31,11 @@ public class LineaPedido {
 	private int unidades;
 	
 	@ManyToOne
-	@JoinColumn(name = "idPedido", nullable=false)
+	@JoinColumn(name = "idPedido", nullable=false, foreignKey = @ForeignKey(name = "FK_LINEA_PEDIDO_ID_PEDIDO"))
 	private Pedido pedido;
 	
 	@ManyToOne
-	@JoinColumn(name = "idProducto", nullable=false)
+	@JoinColumn(name = "idProducto", nullable=false, foreignKey = @ForeignKey(name = "FK_LINEA_PEDIDO_ID_PRODUCTO"))
 	private Producto producto;
 	
 	public LineaPedido() {

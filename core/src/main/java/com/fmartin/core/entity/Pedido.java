@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -26,7 +29,12 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table(name = "tt_pedido")
+//@Table(name = "tt_pedido", uniqueConstraints={@UniqueConstraint(columnNames={"codigo"},name = "UQ_PEDIDO_CODIGO")})
+@Table(name = "tt_pedido", uniqueConstraints = {
+   @UniqueConstraint(name = "UQ_PEDIDO_CODIGO", 
+	   columnNames = {"codigo"}),
+   @UniqueConstraint(name = "UQ_PEDIDO_REF_ALMACEN", 
+		columnNames = {"refAlmacen"})})
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = -8058130391749281202L;
@@ -36,17 +44,18 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotNull
-	private String codigo;
+	private String codigo; 
+	
+	private String refAlmacen;
 	
 	@OneToMany(mappedBy="pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LineaPedido> lineas;
 	
 	@NotNull
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="pedido_direccion",
-			joinColumns = @JoinColumn(name="idPedido"),
-			inverseJoinColumns = @JoinColumn(name="idDireccion"))
+	@JoinTable(name="tt_pedido_direccion",
+			joinColumns = @JoinColumn(name="idPedido", foreignKey = @ForeignKey(name = "FK_DIRECCION_ID_PEDIDO")),
+			inverseJoinColumns = @JoinColumn(name="idDireccion", foreignKey = @ForeignKey(name = "FK_PEDIDO_ID_DIRECCION")))
 	private Set<Direccion> direcciones;
 	
 	@NotNull
@@ -146,6 +155,14 @@ public class Pedido implements Serializable{
 	@Override
 	public String toString() {
 		return "Pedido [codigo=" + codigo + ", lineas=" + lineas + ", usuario=" + usuario + "]";
+	}
+
+	public String getRefAlmacen() {
+		return refAlmacen;
+	}
+
+	public void setRefAlmacen(String refAlmacen) {
+		this.refAlmacen = refAlmacen;
 	}
 
 }
